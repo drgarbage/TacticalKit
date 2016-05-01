@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Maps</title>
+    <script src="libs/jquery/jquery-1.9.0.min.js"></script>
+    <script>
+        function update() {
+            var data = {
+                token: $('#token').val(),
+                group: $('#group').val(),
+                name: $('#name').val(),
+                latitude: parseFloat($('#latitude').val()),
+                longitude: parseFloat($('#longitude').val()),
+                altitude: parseFloat($('#altitude').val())
+            };
+
+            var success = function (data, textStatus, jqXHR) {
+                alert(JSON.stringify(data));
+            };
+
+            $.post('/game/sync', data, success, 'json');
+        }
+    </script>
+</head>
+<body>
+    <input type="text" value="1234" placeholder="token" id="token" />
+    <input type="text" value="ARAT" placeholder="group" id="group" />
+    <input type="text" value="DrCKNY" placeholder="name" id="name" />
+    <input type="number" value="100" placeholder="latitude" id="latitude" />
+    <input type="number" value="100" placeholder="longitude" id="longitude" />
+    <input type="number" value="100" placeholder="altitude" id="altitude" />
+    <button onclick="update();">Update</button>
+</body>
+</html>
