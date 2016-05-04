@@ -15,20 +15,36 @@ namespace TacticalKit.Controllers
             new Dictionary<string, GammerState>();
         private static IDictionary<string, GameState> GameStates =
             new Dictionary<string, GameState>();
+        private static IList<Overlay> Overlays =
+            new List<Overlay>();
 
-        private ActionResult Result(object result)
+        public ActionResult sync(StatePackage package)
         {
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+            foreach (GammerState gammer in package.gammers)
+            {
+                sync(gammer);
+            }
 
-        public ActionResult sync(GammerState state)
-        {
-            if (state == null || string.IsNullOrEmpty(state.token))
-                return Result(GammerStates.Select(g => g.Value));
-            if (!GammerStates.ContainsKey(state.token))
-                GammerStates[state.token] = state;
-            GammerStates[state.token].sync(state);
-            return Result(GammerStates.Where(s => state.group.StartsWith(s.Value.group)).Select(g => g.Value));
+            foreach (GameState info in package.infos)
+            {
+                sync(info);
+            }
+
+            IList<GammerState> gammers = GammerStates
+                .Where(s => s.Value.group.StartsWith(package.group))
+                .Select(g => g.Value)
+                .ToList();
+
+            IList<GameState> infos = GameStates
+                .Where(s => s.Value.group.StartsWith(package.group))
+                .Select(g => g.Value)
+                .ToList();
+
+            return Result(new StatePackage(){
+                group = package.group,
+                infos = infos,
+                gammers = gammers
+            });
         }
 
         public ActionResult update(IList<GameState> infos)
@@ -41,6 +57,29 @@ namespace TacticalKit.Controllers
             GammerStates.Clear();
             GameStates.Clear();
             return Result(GammerStates.Select(g => g.Value));
+        }
+
+        //
+        // internal service
+        //
+
+        private ActionResult Result(object result)
+        {
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        private void sync(GammerState state)
+        {
+            if (!GammerStates.ContainsKey(state.token))
+                GammerStates[state.token] = state;
+            GammerStates[state.token].sync(state);
+        }
+
+        private void sync(GameState info)
+        {
+            if (!GameStates.ContainsKey(info.identifier))
+                GameStates[info.identifier] = info;
+            GameStates[info.identifier].sync(info);
         }
     }
 }

@@ -1,10 +1,170 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Maps</title>
-    <script src="libs/jquery/jquery-1.9.0.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="libs/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="libs/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">-->
+    <style>
+      html, body {
+        margin:0px;
+        padding:0px;
+        height: 100%;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default" style="position: fixed; display: block; width:100%; z-index: 999;">
+      <div class="container-fluid navbar-fixed-top">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">TacticalKit</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-refresh"></span></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"</a>
+              <ul class="dropdown-menu">
+                <li><a href="#" data-toggle="modal" data-target="#group-settings">Group Settings</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#" data-toggle="modal" data-target="#manual-update">Manual Update</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div id="map" class="container-fluid"></div>
+    <div id="group-settings" class="modal fade" role="dialog" aria-labelledby="Group Settings">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="H1">Group Settings</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">Token</span>
+                        <input type="text" class="form-control" value="xxxx-xxxx-xxxx-xxxx" placeholder="token" id="token" />
+                    </div>
+
+                    <br />
+                    
+                    <div class="input-group">
+                        <span class="input-group-addon">Group</span>
+                        <input type="text" class="form-control" value="USvsRUSSIA2016.US.ARAT.ALPHA" placeholder="group" id="group" />
+                    </div>
+                    
+                    <br />
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Player</span>
+                        <input type="text" class="form-control" value="DrCKNY" placeholder="name" id="name" />
+                    </div>
+
+                    <br />
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="manual-update" class="modal fade" role="dialog" aria-labelledby="Manual Update">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Manual Update Location</h4>
+                </div>
+                <div class="modal-body">
+
+                        <div class="input-group">
+                          <span class="input-group-addon">LAT</span>
+                          <input type="number" class="form-control" value="100" placeholder="latitude" id="latitude" />
+                        </div>
+
+                        <br />
+
+                        <div class="input-group">
+                          <span class="input-group-addon">LNG</span>
+                          <input type="number" class="form-control" value="100" placeholder="longitude" id="longitude" />
+                        </div>
+
+                        <br />
+                
+                        <div class="input-group">
+                          <span class="input-group-addon">ALT</span>
+                          <input type="number" class="form-control" value="100" placeholder="altitude" id="altitude" />
+                        </div>
+                </div>
+                <div class="modal-footer" style="text-align:right;">
+                    <button class="btn btn-primary" onclick="$('#manual-update').modal('hide'); update();">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <script src="libs/jquery/jquery-1.12.3.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
+    <script src="libs/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     <script>
+        var map;
+        var ICON_SELF = '/images/team.png';
+        var ICON_TEAMATE = '/images/team.png';
+        var ICON_KIA = '/images/kia.png';
+        var gammers = {};
+        var gammerMarkers = {};
+        function updateView() {
+            for (var token in gammers) {
+                var gammer = gammers[token];
+                if (!gammerMarkers[token]) {
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: { lat: gammer.latitude, lng: gammer.longitude },
+                        icon: (gammer.state != 'ALIVE') ? ICON_KIA : ICON_TEAMATE
+                    });
+                    gammerMarkers[token] = marker;
+                } else {
+                    gammerMarkers[token].setPosition(
+                        new google.maps.LatLng( gammer.latitude, gammer.longitude ) );
+                }
+            }
+        }
+        function sync(state) {
+            var success = function (data, textStatus, jqXHR) {
+                var token = $('#token').val();
+                for (var key in data) {
+                    var gamestate = data[key];
+                    //if (token == gamestate.token)
+                    //    continue;
+                    gammers[token] = gamestate;
+                }
+                updateView();
+            };
+
+            $.post('/game/sync', state, success, 'json');
+        }
         function update() {
             var data = {
                 token: $('#token').val(),
@@ -15,21 +175,66 @@
                 altitude: parseFloat($('#altitude').val())
             };
 
-            var success = function (data, textStatus, jqXHR) {
-                alert(JSON.stringify(data));
+            alert(JSON.stringify(data));
+            sync(data);
+        }
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 22.88115, lng: 120.445319 },
+                zoom: 17,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.BOTTOM_CENTER
+                }
+            });
+
+            var imageBounds = {
+                north: 22.887360,
+                south: 22.873783,
+                east: 120.450509,
+                west: 120.442279
             };
 
-            $.post('/game/sync', data, success, 'json');
+            //var ground = new google.maps.GroundOverlay(
+            //    '/images/overlay.png',
+            //    imageBounds);
+            //ground.setMap(map);
+
+            var grid = new google.maps.GroundOverlay(
+                '/images/grid.png',
+                imageBounds);
+            grid.setMap(map);
+
+            if (!!navigator.geolocation) {
+                // Support
+                navigator.geolocation.getCurrentPosition(function () {
+                    current = new google.maps.LatLng(
+                        position.coords.latitude,
+                        position.coords.longitude);
+
+                    map.setCenter(current);
+                    alert("show center");
+                });
+            } 
+
+            // @todo: show current location
+            // @todo: update personal status
+            // @todo: sync map item from server
         }
+    
+        $(document).ready(function () {
+
+            // init ui event handlers
+            $("#btnUpdate").click(sync);
+            $('#manual-update').on('show.bs.modal', function (event) {
+                var latlng = map.getCenter();
+                $('#latitude').val(latlng.lat);
+                $('#longitude').val(latlng.lng);
+            })
+            setInterval(sync, 1000);
+        });
     </script>
-</head>
-<body>
-    <input type="text" value="1234" placeholder="token" id="token" />
-    <input type="text" value="ARAT" placeholder="group" id="group" />
-    <input type="text" value="DrCKNY" placeholder="name" id="name" />
-    <input type="number" value="100" placeholder="latitude" id="latitude" />
-    <input type="number" value="100" placeholder="longitude" id="longitude" />
-    <input type="number" value="100" placeholder="altitude" id="altitude" />
-    <button onclick="update();">Update</button>
+    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&callback=initMap"></script>
 </body>
 </html>

@@ -9,9 +9,9 @@ namespace TacticalKit.Models
     public class StatePackage
     {
         public string group { get; set; }
-        IList<GameState> infos { get; set; }
-        IList<GammerState> gammers { get; set; }
-        IList<Overlay> overlays { get; set; }
+        public IList<GameState> infos { get; set; }
+        public IList<GammerState> gammers { get; set; }
+        public IList<Overlay> overlays { get; set; }
     }
     public class GameState
     {
@@ -36,7 +36,6 @@ namespace TacticalKit.Models
                 credential = string.Empty
             };
             this.token = string.Empty;
-            this.battlefield = string.Empty;
             this.group = string.Empty;
             this.status = ALIVE;
         }
@@ -67,19 +66,6 @@ namespace TacticalKit.Models
         public string name { get; set; }
         public string credential { get; set; }
         public dynamic info { get; set; }
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
-        {
-            string name = binder.Name.ToLower();
-
-            return dictionary.TryGetValue(name, out result);
-        }
-        public override bool TrySetMember(SetMemberBinder binder, object value)
-        {
-            string name = binder.Name.ToLower();
-            dictionary[name] = value;
-
-            return true;
-        }
     }
     public class Overlay
     {

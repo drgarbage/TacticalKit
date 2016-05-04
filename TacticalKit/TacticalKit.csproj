@@ -148,6 +148,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BattlefieldController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -158,6 +159,21 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="images\grid.png" />
+    <Content Include="images\kia.png" />
+    <Content Include="images\locate.png" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\overlay.png" />
+    <Content Include="images\team.png" />
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap-theme.css" />
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap-theme.min.css" />
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap.css" />
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap.min.css" />
+    <Content Include="libs\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="libs\bootstrap-3.3.6-dist\js\bootstrap.js" />
+    <Content Include="libs\bootstrap-3.3.6-dist\js\bootstrap.min.js" />
+    <Content Include="libs\bootstrap-3.3.6-dist\js\npm.js" />
+    <Content Include="libs\jquery\jquery-1.12.3.min.js" />
     <Content Include="libs\jquery\jquery-1.9.0.min.js" />
     <Content Include="map.html" />
     <Content Include="Web.config" />
@@ -169,6 +185,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap-theme.css.map" />
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap.css.map" />
+    <Content Include="libs\bootstrap-3.3.6-dist\css\bootstrap.min.css.map" />
+    <Content Include="libs\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="libs\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="libs\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="libs\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\ARAT.pubxml" />
   </ItemGroup>
   <ItemGroup>
